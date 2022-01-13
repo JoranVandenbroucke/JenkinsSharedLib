@@ -22,13 +22,13 @@ def build(engineRoot, projectName, project, config, platform, outputDir, bluepri
       // Build
       bat(label: "Run UnrealBuildTool", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\DotNET\\UnrealBuildTool.exe\" -projectfiles -project=\"${ue4Info.project}\" -Game -Rocket -Progress -NoIntellisense -WaitMutex -Platforms=\"${platform}\" PrecompileForTargets = PrecompileTargetsType.Any;")
       
-      if (config.toLowerCase() == "development" && platform.toLowerCase() != "ps4")
+      if (platform.toLowerCase() != "ps4")
       {
          bat(label: "Build UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\Build.bat\" ${ue4Info.projectName}Editor ${platform} ${config} \"${ue4Info.project}\" -Log=\"${logFile}\"")
       }
 
       // Light baking
-      bat(label: "Light baking", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -run=resavepackages -ignorechangelist -buildlighting -quality=preview -maps=col_demo -projectonly -allowcommandletrendering")
+      bat(label: "Light baking", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -Run=ResavePackages -IgnoreChangeList -BuildLighting -Quality=Preview -Map=CoL_Demo -ProjectOnly -AllowCommandletRendering")
       // Package
       bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -Package -crashreporter")
    }
