@@ -27,6 +27,8 @@ def build(engineRoot, projectName, project, config, platform, outputDir, bluepri
          bat(label: "Build UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\Build.bat\" ${ue4Info.projectName}Editor ${platform} ${config} \"${ue4Info.project}\" -Log=\"${logFile}\"")
       }
 
+      // Light baking
+      bat(label: "Light baking", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -run=resavepackages -ignorechangelist -buildlighting -quality=preview -maps=col_demo -projectonly -allowcommandletrendering")
       // Package
       bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Rocket -Prereqs -Package -crashreporter")
    }
@@ -69,7 +71,7 @@ def runAutomationCommand(testCommand, config = "Development", platform = "Win64"
 {
    log("Running tests in ${config} configuration on ${platform}")
    def result = bat (label: "Run UE4 Automation Tests", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\" -ReportExportPath=\"${env.WORKSPACE}\\Logs\\UnitTestsReport\"", returnStatus: true)
-   
+   echo result
    if (result != 0)
    {
       unstable "Some tests did not pass!"
