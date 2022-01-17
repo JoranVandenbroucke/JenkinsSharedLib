@@ -122,7 +122,7 @@ def createMessage(title, messageColor, fields, footer = null, content = null)
 
    return JsonOutput.toJson(body).replace('"','""')
 }
-def createMessage(title, messageColor, fields)
+def createMessageWithColor(title, messageColor, fields)
 {
    def body = [embeds: 
       [[
@@ -131,16 +131,6 @@ def createMessage(title, messageColor, fields)
       fields: fields
       ]]
    ]
-	
-   if (footer)
-   {
-      body.embeds[0].footer = footer
-   }
-
-   if (content)
-   {
-      body.content = content
-   }
 
    return JsonOutput.toJson(body).replace('"','""')
 }
