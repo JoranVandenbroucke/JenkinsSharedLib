@@ -71,11 +71,11 @@ def runAutomationCommand(testCommand, config = "Development", platform = "Win64"
 {
    log("Running tests in ${config} configuration on ${platform}")
    def result = bat (label: "Run UE4 Automation Tests", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\" -ReportExportPath=\"${env.WORKSPACE}\\Logs\\UnitTestsReport\"", returnStatus: true)
-   echo result
-   if (result != 0)
-   {
-      unstable "Some tests did not pass!"
-   }
+   
+   //if (result != 0)
+   //{
+   //   unstable "Some tests did not pass!"
+   //}
 }
 
 def getTestResults()
