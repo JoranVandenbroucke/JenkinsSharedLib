@@ -38,10 +38,10 @@ def pack(platform, outputDir, blueprintOnly = false )
     }
 }
 
-def lightBake(platform, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt")
+def lightBake(platform, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt", quality = "Preview")
 {
     // Light baking
-    bat(label: "Light baking", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -Run=ResavePackages -IgnoreChangeList -BuildLighting -Quality=Preview -Map=CoL_Demo -ProjectOnly -AllowCommandletRendering -log -logs=logFile")
+    bat(label: "Light baking", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -Run=ResavePackages -IgnoreChangeList -BuildLighting -Quality=${quality} -buildreflectioncaptures -buildtexturestreamingforall -BuildNavigationData -BuildHLOD -MapsOnly -ProjectOnly -AllowCommandletRendering -log -logs=logFile")
 }
 
 def runAllTests(config = "Development", platform = "Win64")
