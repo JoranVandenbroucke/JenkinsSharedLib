@@ -41,7 +41,7 @@ def pack(platform, outputDir, blueprintOnly = false )
 def lightBake(platform, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt", quality = "Preview")
 {
     // Light baking
-    bat(label: "Light baking", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -Run=ResavePackages -IgnoreChangeList -BuildLighting -Quality=${quality} -buildreflectioncaptures -buildtexturestreamingforall -BuildNavigationData -BuildHLOD -Map=Col_Demo -ProjectOnly -AllowCommandletRendering -log=\"${logFile}\" ")
+    bat(label: "Light baking", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -Run=ResavePackages -IgnoreChangeList -BuildLighting -Quality=${quality} -buildreflectioncaptures -NoLogTimes -buildtexturestreamingforall -BuildNavigationData -BuildHLOD -Map=Col_Demo -ProjectOnly -AllowCommandletRendering -log=\"${logFile}\" ")
 }
 
 def runAllTests(config = "Development", platform = "Win64")
