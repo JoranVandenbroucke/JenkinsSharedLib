@@ -29,19 +29,19 @@ def pack(platform, outputDir, blueprintOnly = false )
     if (!blueprintOnly)
     {
         // Package
-        bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -log=\"${outputDir}\" -Rocket -Prereqs -Package -crashreporter", returnStatus: true)
+        bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Log=\"${outputDir}\" -Rocket -Prereqs -Package -crashreporter", returnStatus: true)
     }
     else
     {
         // Only package since we have a blueprintOnly project
-        bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -map=col_demo -Build -Stage -Pak -Archive -log=\"${outputDir}\" -Rocket -Prereqs -Package", returnStatus: true)
+        bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -map=col_demo -Build -Stage -Pak -Archive -Log=\"${outputDir}\" -Rocket -Prereqs -Package", returnStatus: true)
     }
 }
 
 def lightBake(platform, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt", quality = "Preview")
 {
     // Light baking
-    bat(label: "Light baking", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -Run=ResavePackages -IgnoreChangeList -BuildLighting -Quality=${quality} -buildreflectioncaptures -NoLogTimes -buildtexturestreamingforall -BuildNavigationData -BuildHLOD -Map=Col_Demo -ProjectOnly -AllowCommandletRendering -log=\"${logFile}\" ", returnStatus: true)
+    bat(label: "Light baking", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -Run=ResavePackages -IgnoreChangeList -BuildLighting -Quality=${quality} -buildreflectioncaptures -NoLogTimes -buildtexturestreamingforall -BuildNavigationData -BuildHLOD -Map=Col_Demo -ProjectOnly -AllowCommandletRendering -Log=\"${logFile}\"", returnStatus: true)
 }
 
 def runAllTests(config = "Development", platform = "Win64")
