@@ -75,7 +75,7 @@ def runFilteredTests(testFilter, config = "Development", platform = "Win64")
 def runAutomationCommand(testCommand, config = "Development", platform = "Win64")
 {
     log("Running tests in ${config} configuration on ${platform}")
-    def result = bat (label: "Run UE4 Automation Tests", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\" -ReportExportPath=\"${env.WORKSPACE}\\Logs\\UnitTestsReport\" -Log -Log=ChildofLothian.log", returnStatus: true)
+    def result = bat (label: "Run UE4 Automation Tests", script: "\"${ue4Info.engineRoot}Engine\\Binaries\\${platform}\\UE4Editor-cmd.exe\" \"${ue4Info.project}\" -stdout -fullstdlogoutput -buildmachine -nullrhi -unattended -NoPause -NoSplash -NoSound -ExecCmds=\"Automation ${testCommand};Quit\" -ReportExportPath=\"${env.WORKSPACE}\\Logs\\UnitTestsReport\" -Log -Log=ChildofLothian.log -NoLogTimes", returnStatus: true)
     
     //if (result != 0)
     //{
