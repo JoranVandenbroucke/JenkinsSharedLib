@@ -24,17 +24,17 @@ def build( config, platform, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.B
     }
 }
 
-def pack(platform, outputDir, blueprintOnly = false )
+def pack(platform, outputDir, blueprintOnly = false, logFile = "${env.WORKSPACE}\\Logs\\UE4Build-${env.BUILD_NUMBER}.txt" )
 {
     if (!blueprintOnly)
     {
         // Package
-        bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Log=\"${outputDir}\" -Rocket -Prereqs -Package -crashreporter", returnStatus: true)
+        bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -Allmaps -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Log=\"${logFile}\" -Rocket -Prereqs -Package -crashreporter", returnStatus: true)
     }
     else
     {
         // Only package since we have a blueprintOnly project
-        bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -map=col_demo -Build -Stage -Pak -Archive -Log=\"${outputDir}\" -Rocket -Prereqs -Package", returnStatus: true)
+        bat(label: "Package UE4 project", script: "\"${ue4Info.engineRoot}Engine\\Build\\BatchFiles\\RunUAT.bat\" BuildCookRun -Project=\"${ue4Info.project}\" -NoP4 -Distribution -TargetPlatform=${platform} -Platform=${platform} -ClientConfig=${config} -ServerConfig=${config} -Cook -map=col_demo -Build -Stage -Pak -Archive -Archivedirectory=\"${outputDir}\" -Log=\"${logFile}\" -Rocket -Prereqs -Package", returnStatus: true)
     }
 }
 
